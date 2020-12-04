@@ -62,7 +62,7 @@ router.put('/:id', (req, res) => {
                     message: `Action with ${id} has bee updated`
                 })
             } else {
-                res.status(404).json({
+                res.status(400).json({
                     message: `No action found with id of ${id}`
                 })
             }
