@@ -46,16 +46,21 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    Project.insert(req.body)
+    if (!req.body.name || !req.body.description) {
+        res.status(400).json({
+            message: 'Request body is missing required fields'
+        })
+    } else {
+        Project.insert(req.body)
         .then(project => {
             res.status(201).json(project)
         })
         .catch(error => {
-            console.log(error)
-            res.status(500).json({
-                message: 'Error adding project'
+            res.status(400).json({
+                message: error.message
             })
         })
+    }
 })
 
 router.delete('/:id', (req, res) => {
@@ -66,7 +71,7 @@ router.delete('/:id', (req, res) => {
                     message: `Project with id of ${req.params.id} has been removed`
                 })
             } else {
-                res.status(400).json({
+                res.status(404).json({
                     message: `Project with id of ${req.params.id} could not be found`
                 })
             }
@@ -93,7 +98,7 @@ router.put('/:id', (req, res) => {
         })
         .catch(error => {
             console.log(error)
-            res.status(500).json({
+            res.status(400).json({
                 message: 'Error updating project'
             })
         })

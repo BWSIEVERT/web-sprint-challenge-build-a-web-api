@@ -55,23 +55,22 @@ router.post("/", (req, res) => {
 router.put('/:id', (req, res) => {
     const changes = req.body
     const { id } = req.params
-    Action.update(id, changes)
+    if (!req.body.description || !req.body.notes) {
+        res.status(400).json({
+            message: 'name, description, notes and id are required'
+        })
+    } else {
+        Action.update(id, changes)
         .then(action => {
-            if (action) {
-                res.status(300).json({
-                    message: `Action with ${id} has bee updated`
-                })
-            } else {
-                res.status(400).json({
-                    message: `No action found with id of ${id}`
-                })
-            }
+            res.status(200).json(action)
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Error updating status'
+                message: 'Error updating action'
             })
         })
+    }
+    
 })
 
 router.delete('/:id', (req, res) => {
