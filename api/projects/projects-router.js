@@ -52,7 +52,7 @@ router.post('/', (req, res) => {
         })
         .catch(error => {
             console.log(error)
-            res.status(400).json({
+            res.status(500).json({
                 message: 'Error adding project'
             })
         })
@@ -66,7 +66,7 @@ router.delete('/:id', (req, res) => {
                     message: `Project with id of ${req.params.id} has been removed`
                 })
             } else {
-                res.status(404).json({
+                res.status(400).json({
                     message: `Project with id of ${req.params.id} could not be found`
                 })
             }
@@ -113,7 +113,7 @@ router.get('/:id/actions', (req, res) => {
         .catch(error => {
             console.log(error)
             res.status(500).json({
-                message: 'Error retrieving project actions'
+                message: 'Error retrieving project actions.'
             })
         })
 })

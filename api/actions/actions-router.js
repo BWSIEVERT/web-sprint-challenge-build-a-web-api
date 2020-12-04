@@ -58,7 +58,9 @@ router.put('/:id', (req, res) => {
     Action.update(id, changes)
         .then(action => {
             if (action) {
-                res.status(300).json({action})
+                res.status(300).json({
+                    message: `Action with ${id} has bee updated`
+                })
             } else {
                 res.status(400).json({
                     message: `No action found with id of ${id}`
@@ -66,7 +68,6 @@ router.put('/:id', (req, res) => {
             }
         })
         .catch(error => {
-            console.log(error)
             res.status(500).json({
                 message: 'Error updating status'
             })
