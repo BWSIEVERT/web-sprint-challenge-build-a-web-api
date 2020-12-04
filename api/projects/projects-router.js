@@ -66,7 +66,7 @@ router.delete('/:id', (req, res) => {
                     message: `Project with id of ${req.params.id} has been removed`
                 })
             } else {
-                res.status(400).json({
+                res.status(404).json({
                     message: `Project with id of ${req.params.id} could not be found`
                 })
             }
